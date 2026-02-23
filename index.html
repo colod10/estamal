@@ -3,92 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boutique digital de relojes y joyería premium. Compra por Instagram DM.">
     <title>Puro Dropshipping | Luxury Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
+    <header class="site-header">
+        <p class="brand-kicker">Luxury Boutique</p>
         <h1>PURO DROPSHIPPING</h1>
     </header>
 
-    <main class="main-layout">
-        <div class="vertical-col" onclick="openModal('modalRelojes')">
-            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200');"></div>
-            <div class="content">
-                <h2>Relojes</h2>
-                <p class="view-more">VER COLECCIÓN</p>
-            </div>
-        </div>
+    <main class="main-layout" aria-label="Categorías principales">
+        <button class="vertical-col category-trigger" type="button" data-modal-target="modalRelojes" aria-controls="modalRelojes">
+            <span class="bg-img bg-relojes" aria-hidden="true"></span>
+            <span class="content">
+                <span class="category-title">Relojes</span>
+                <span class="view-more">Ver colección</span>
+            </span>
+        </button>
 
-        <div class="vertical-col insta-box">
+        <section class="vertical-col insta-box" aria-label="Asesoría VIP por Instagram">
             <div class="content">
-                <p class="tagline">ASESORÍA VIP</p>
+                <p class="tagline">Asesoría VIP</p>
                 <h2 class="consult-title">Consúltanos</h2>
-                <a href="https://www.instagram.com/purodropshipping?igsh=MWFhZzd1czQ5YzBncQ==" target="_blank" class="insta-btn">Escribinos</a>
+                <a href="https://www.instagram.com/purodropshipping?igsh=MWFhZzd1czQ5YzBncQ==" target="_blank" rel="noopener noreferrer" class="insta-btn">Escribinos</a>
             </div>
-        </div>
+        </section>
 
-        <div class="vertical-col" onclick="openModal('modalJoyeria')">
-            <div class="bg-img" style="background-image: url('https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=1200');"></div>
-            <div class="content">
-                <h2>Joyería</h2>
-                <p class="view-more">VER COLECCIÓN</p>
-            </div>
-        </div>
+        <button class="vertical-col category-trigger" type="button" data-modal-target="modalJoyeria" aria-controls="modalJoyeria">
+            <span class="bg-img bg-joyeria" aria-hidden="true"></span>
+            <span class="content">
+                <span class="category-title">Joyería</span>
+                <span class="view-more">Ver colección</span>
+            </span>
+        </button>
     </main>
 
-    <div id="modalRelojes" class="modal">
+    <section id="modalRelojes" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalRelojesTitle" hidden>
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Colección Relojes</h2>
-                <span class="close-btn" onclick="closeModal('modalRelojes')">&times;</span>
+                <h2 id="modalRelojesTitle">Colección Relojes</h2>
+                <button class="close-btn" type="button" data-close-modal aria-label="Cerrar modal">&times;</button>
             </div>
             <div class="product-grid">
                 <div class="product-card">
-                    <img src="https://www.casio.com/content/dam/casio/product-info/locales/ph/en/timepiece/product/watch/M/MT/MTP/mtp-1302dd-9av/assets/MTP-1302DD-9AV.png.transform/main-visual-sp/image.png" alt="Casio MTP">
+                    <img src="https://www.casio.com/content/dam/casio/product-info/locales/ph/en/timepiece/product/watch/M/MT/MTP/mtp-1302dd-9av/assets/MTP-1302DD-9AV.png.transform/main-visual-sp/image.png" alt="Casio MTP Tiffany Blue" loading="lazy">
                     <h3>Casio MTP Tiffany Blue</h3>
                     <p class="price">$75.00</p>
-                    <button class="btn-comprar" onclick="irAInstagram()">COMPRAR POR DM</button>
+                    <button class="btn-comprar btn-instagram" type="button">Comprar por DM</button>
                 </div>
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=600" alt="Reloj">
+                    <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=600" alt="Reloj clásico plateado" loading="lazy">
                     <h3>Classic Silver</h3>
                     <p class="price">$8.200</p>
-                    <button class="btn-comprar" onclick="irAInstagram()">COMPRAR POR DM</button>
+                    <button class="btn-comprar btn-instagram" type="button">Comprar por DM</button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="modalJoyeria" class="modal">
+    <section id="modalJoyeria" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalJoyeriaTitle" hidden>
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Colección Joyería</h2>
-                <span class="close-btn" onclick="closeModal('modalJoyeria')">&times;</span>
+                <h2 id="modalJoyeriaTitle">Colección Joyería</h2>
+                <button class="close-btn" type="button" data-close-modal aria-label="Cerrar modal">&times;</button>
             </div>
             <div class="product-grid">
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=600" alt="Joya">
+                    <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?q=80&w=600" alt="Cadena cubana 18k" loading="lazy">
                     <h3>Cadena Cubana 18k</h3>
                     <p class="price">$4.500</p>
-                    <button class="btn-comprar" onclick="irAInstagram()">COMPRAR POR DM</button>
+                    <button class="btn-comprar btn-instagram" type="button">Comprar por DM</button>
                 </div>
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1598560912005-5976593dc88b?q=80&w=600" alt="Joya">
+                    <img src="https://images.unsplash.com/photo-1598560912005-5976593dc88b?q=80&w=600" alt="Pulsera con diamantes" loading="lazy">
                     <h3>Pulsera Diamond</h3>
                     <p class="price">$3.100</p>
-                    <button class="btn-comprar" onclick="irAInstagram()">COMPRAR POR DM</button>
+                    <button class="btn-comprar btn-instagram" type="button">Comprar por DM</button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <footer>
+    <footer class="site-footer">
         &copy; 2026 PURO DROPSHIPPING | LUXURY BOUTIQUE
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
