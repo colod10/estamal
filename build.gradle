@@ -1,0 +1,3 @@
+tasks.register('tiksavePlaceholder') {
+    doLast { println 'TikSave build is handled by jitpack.yml' }
+}
