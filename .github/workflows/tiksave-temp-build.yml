@@ -1,55 +1,39 @@
-name: Temporary TikSave Build
+name: TikSave v0.2.0 Temporary Build
 on:
-  pull_request:
+  push:
     branches:
-      - main
-    paths:
-      - 'tiksave-build/**'
-
+      - 'tmp/tiksave-v0.2.0-build-20260920'
 permissions:
   contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-
       - uses: android-actions/setup-android@v3
-
       - name: Install Android SDK 36
         shell: bash
         run: |
           yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "platforms;android-36" "build-tools;36.0.0"
-
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '9.6.0'
-
-      - name: Restore TikSave source
-        shell: bash
-        run: |
-          base64 -d tiksave-build/TikSave-v0.2.0-source.b64 > /tmp/TikSave-v0.2.0-source.zip
-          mkdir -p /tmp/tiksave-src
-          unzip -q /tmp/TikSave-v0.2.0-source.zip -d /tmp/tiksave-src
-
-      - name: Build APK
-        working-directory: /tmp/tiksave-src/TikSave
+      - name: Build signed debug APK
+        working-directory: tiksave-build/project
         run: gradle --no-daemon :app:assembleDebug --stacktrace
-
-      - name: Prepare artifact
+      - name: Verify signature and manifest
         shell: bash
         run: |
           mkdir -p /tmp/tiksave-out
-          cp /tmp/tiksave-src/TikSave/app/build/outputs/apk/debug/app-debug.apk /tmp/tiksave-out/TikSave-v0.2.0.apk
+          cp tiksave-build/project/app/build/outputs/apk/debug/app-debug.apk /tmp/tiksave-out/TikSave-v0.2.0.apk
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs /tmp/tiksave-out/TikSave-v0.2.0.apk | tee /tmp/tiksave-out/signature.txt
+          "$ANDROID_HOME/build-tools/36.0.0/aapt" dump badging /tmp/tiksave-out/TikSave-v0.2.0.apk | head -40 > /tmp/tiksave-out/manifest.txt
           sha256sum /tmp/tiksave-out/TikSave-v0.2.0.apk > /tmp/tiksave-out/TikSave-v0.2.0.apk.sha256
-
       - uses: actions/upload-artifact@v4
         with:
           name: TikSave-v0.2.0
