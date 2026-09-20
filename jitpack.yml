@@ -1,0 +1,24 @@
+jdk:
+  - openjdk17
+
+before_install:
+  - set -e
+  - yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
+  - "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0"
+  - curl -fsSL https://services.gradle.org/distributions/gradle-9.7.1-bin.zip -o /tmp/gradle.zip
+  - unzip -q -o /tmp/gradle.zip -d "$HOME"
+  - test -x "$HOME/gradle-9.7.1/bin/gradle"
+
+install:
+  - set -e
+  - base64 -d tiksave-build/TikSave-v0.2.0-source.b64 > /tmp/TikSave-v0.2.0-source.zip
+  - rm -rf /tmp/tiksave-src && mkdir -p /tmp/tiksave-src
+  - unzip -q /tmp/TikSave-v0.2.0-source.zip -d /tmp/tiksave-src
+  - "$HOME/gradle-9.7.1/bin/gradle" -p /tmp/tiksave-src/TikSave --no-daemon :app:assembleDebug --stacktrace
+  - APK=/tmp/tiksave-src/TikSave/app/build/outputs/apk/debug/app-debug.apk
+  - test -s "$APK"
+  - OUT="$HOME/.m2/repository/com/github/colod10/estamal/$VERSION"
+  - mkdir -p "$OUT"
+  - cp "$APK" "$OUT/estamal-$VERSION.apk"
+  - printf '<project xmlns="http://maven.apache.org/POM/4.0.0"><modelVersion>4.0.0</modelVersion><groupId>com.github.colod10</groupId><artifactId>estamal</artifactId><version>%s</version><packaging>apk</packaging></project>\n' "$VERSION" > "$OUT/estamal-$VERSION.pom"
+  - sha256sum "$APK" > "$OUT/estamal-$VERSION.apk.sha256"
